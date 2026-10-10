@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family 100 - Ekosistem & Rantai Makanan SD Kelas 5</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            navy: '#0f172a',
+                            blue: '#1e3a8a',
+                            gold: '#fbbf24',
+                            amber: '#f59e0b',
+                            emerald: '#10b981',
+                            crimson: '#ef4444'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Fredoka', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #064e3b 100%);
+            min-height: 100vh;
+            color: #f8fafc;
+        }
+
+        .feud-box {
+            perspective: 1000px;
+        }
+
+        .feud-card {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .feud-card.flipped {
+            transform: rotateX(180deg);
+        }
+
+        .feud-front, .feud-back {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .feud-back {
+            transform: rotateX(180deg);
+        }
+
+        .glow-gold {
+            box-shadow: 0 0 25px rgba(251, 191, 36, 0.5);
+        }
+
+        .glow-blue {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+        }
+
+        @keyframes pulseStrike {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+
+        .strike-anim {
+            animation: pulseStrike 1.2s ease-out forwards;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 4px;
+        }
+    
+        /* ===== VISUAL REFRESH: playful, classroom-friendly nature theme ===== */
+        :root {
+            color-scheme: dark;
+            --forest: #102c27;
+            --forest-2: #17483b;
+            --leaf: #a3e635;
+            --sun: #facc15;
+            --mint: #6ee7b7;
+            --panel: rgba(15, 42, 36, .88);
+        }
+        body {
+            background:
+                radial-gradient(ellipse at 12% 0%, rgba(163,230,53,.16), transparent 32rem),
+                radial-gradient(ellipse at 95% 24%, rgba(45,212,191,.14), transparent 30rem),
+                linear-gradient(145deg, #081c1a 0%, #123a31 48%, #102c27 100%);
+            background-attachment: fixed;
+            letter-spacing: .01em;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: .12;
+            z-index: -1;
+            background-image: radial-gradient(rgba(255,255,255,.3) .7px, transparent .7px);
+            background-size: 18px 18px;
+        }
+        header {
+            background: rgba(7, 27, 24, .88) !important;
+            border-bottom-color: rgba(163,230,53,.35) !important;
+            box-shadow: 0 8px 30px rgba(0,0,0,.16);
+        }
+        header h1 { color: #bef264 !important; letter-spacing: .045em; }
+        header .bg-gradient-to-tr { box-shadow: 0 8px 24px rgba(250,204,21,.22); }
+        main { max-width: 1120px !important; padding-top: 2rem !important; }
+        main > div:first-child {
+            background: linear-gradient(135deg, rgba(19,65,53,.97), rgba(11,37,33,.97)) !important;
+            border: 1px solid rgba(190,242,100,.45) !important;
+            border-radius: 26px !important;
+            box-shadow: 0 22px 60px rgba(0,0,0,.24), inset 0 1px rgba(255,255,255,.06) !important;
+        }
+        #question-number-badge {
+            background: #bef264 !important;
+            border-radius: 999px !important;
+            padding: .55rem 1rem !important;
+            box-shadow: 0 5px 16px rgba(190,242,100,.16);
+        }
+        #question-text {
+            font-size: clamp(1.15rem, 2.2vw, 1.8rem) !important;
+            line-height: 1.45 !important;
+            max-width: 850px;
+            margin-inline: auto;
+        }
+        #question-text::before { content: "🌿  "; }
+        #question-text::after { content: "  🌱"; }
+        #answers-board { gap: .8rem !important; }
+        .feud-box { height: 86px !important; perspective: 1200px; }
+        .feud-card { border-radius: 17px !important; }
+        .feud-front {
+            background: linear-gradient(115deg, #1c5545, #12392f) !important;
+            border: 1px solid rgba(190,242,100,.52) !important;
+            border-radius: 17px !important;
+            padding-inline: 1.1rem !important;
+            box-shadow: inset 0 1px rgba(255,255,255,.08), 0 7px 18px rgba(0,0,0,.13);
+        }
+        .feud-front:hover {
+            transform: translateY(-2px);
+            border-color: #d9f99d !important;
+            box-shadow: 0 10px 24px rgba(0,0,0,.22), 0 0 0 2px rgba(190,242,100,.08);
+        }
+        .feud-front > div > span:first-child {
+            background: #bef264 !important;
+            color: #17382d !important;
+            width: 2.35rem !important;
+            height: 2.35rem !important;
+            font-size: 1rem !important;
+        }
+        .feud-front > div > span:last-child {
+            color: #d1fae5 !important;
+            letter-spacing: .09em !important;
+        }
+        .feud-back {
+            background: linear-gradient(120deg, #087f5b, #115e59) !important;
+            border: 2px solid #6ee7b7 !important;
+            border-radius: 17px !important;
+            padding-inline: 1.1rem !important;
+            box-shadow: 0 10px 24px rgba(0,0,0,.2) !important;
+        }
+        .feud-back > span:first-child {
+            white-space: normal !important;
+            overflow-wrap: anywhere;
+            font-size: clamp(.85rem, 1.4vw, 1.15rem) !important;
+        }
+        .feud-back > div:last-child {
+            background: #facc15 !important;
+            border-radius: 12px !important;
+            min-width: 3.25rem;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        #guess-form { background: rgba(5,25,22,.28); border-radius: 16px; }
+        #answer-input {
+            border-color: #326657 !important;
+            background: #09231f !important;
+            border-radius: 14px !important;
+            min-height: 56px;
+        }
+        #answer-input:focus {
+            border-color: #bef264 !important;
+            box-shadow: 0 0 0 4px rgba(190,242,100,.12) !important;
+        }
+        #guess-form button[type="submit"] {
+            border-radius: 14px !important;
+            min-height: 56px;
+            background: linear-gradient(135deg, #d9f99d, #a3e635) !important;
+            box-shadow: 0 8px 20px rgba(163,230,53,.16) !important;
+        }
+        button, select { transition: transform .18s ease, filter .18s ease, box-shadow .18s ease; }
+        button:not(:disabled):hover { filter: brightness(1.08); }
+        button:not(:disabled):active { transform: scale(.98); }
+        button:focus-visible, select:focus-visible, input:focus-visible {
+            outline: 3px solid #bef264 !important;
+            outline-offset: 3px;
+        }
+        #answers-board + * { margin-top: 1rem; }
+        main > div:nth-of-type(3) {
+            border-color: rgba(110,231,183,.22) !important;
+            border-radius: 22px !important;
+            box-shadow: 0 18px 45px rgba(0,0,0,.17) !important;
+        }
+        #found-count {
+            background: rgba(110,231,183,.1);
+            border: 1px solid rgba(110,231,183,.24);
+            color: #a7f3d0 !important;
+            padding: .35rem .7rem;
+            border-radius: 999px;
+        }
+        #round-score { color: #bef264 !important; }
+        #global-score { color: #facc15 !important; }
+        #key-modal > div { border-radius: 24px !important; border-color: rgba(190,242,100,.42) !important; }
+        footer { color: #9ab8ac !important; border-color: rgba(163,230,53,.13) !important; }
+        @media (max-width: 640px) {
+            main { padding: 1rem .8rem !important; }
+            main > div:first-child { padding: 1rem !important; border-radius: 20px !important; }
+            .feud-box { height: 76px !important; }
+            .feud-front, .feud-back { padding-inline: .8rem !important; }
+            .feud-front > div { gap: .55rem !important; }
+            .feud-front > div > span:last-child { font-size: .68rem !important; }
+            .feud-back > div:last-child { min-width: 2.7rem; padding: .35rem .55rem !important; }
+            #question-text::before, #question-text::after { content: ""; }
+            header .max-w-6xl { align-items: flex-start; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+            }
+        }
+
+    </style>
+</head>
+<body class="font-sans antialiased pb-10 min-h-screen flex flex-col justify-between">
+
+    <!-- HEADER NAVBAR -->
+    <header class="bg-slate-900/80 backdrop-blur-md border-b border-amber-500/30 sticky top-0 z-50 px-4 py-3">
+        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-3">
+            <div class="flex items-center space-x-3">
+                <div class="bg-gradient-to-tr from-amber-500 to-yellow-300 p-2.5 rounded-xl shadow-lg">
+                    <i class="fa-solid font-bold fa-leaf text-slate-900 text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-display font-bold text-xl md:text-2xl text-amber-400 tracking-wide">FAMILY 100 IPAS</h1>
+                    <p class="text-xs text-slate-300 font-medium">Ekosistem, Simbiosis & Rantai Makanan (Kelas 5 SD)</p>
+                </div>
+            </div>
+
+            <!-- Header Action Buttons & Global Stats -->
+            <div class="flex items-center gap-2 md:gap-4">
+                <button onclick="toggleKeyModal()" class="bg-slate-800 hover:bg-slate-700 text-amber-300 hover:text-amber-200 border border-amber-500/40 text-xs md:text-sm px-3.5 py-2 rounded-xl transition flex items-center gap-2 font-semibold">
+                    <i class="fa-solid fa-key"></i> Kunci Jawaban
+                </button>
+                <div class="bg-slate-800/90 border border-amber-400/50 px-4 py-1.5 rounded-xl text-center shadow-inner">
+                    <span class="text-[10px] uppercase tracking-wider text-slate-400 font-bold block">Total Skor Game</span>
+                    <span id="global-score" class="font-display text-xl md:text-2xl font-bold text-amber-400">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-6 w-full flex-grow">
+        
+        <!-- TOP GAME STATUS BAR -->
+        <div class="bg-slate-900/90 border-2 border-amber-500/50 rounded-2xl p-4 md:p-6 mb-6 shadow-2xl relative overflow-hidden backdrop-blur">
+            <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-4">
+                <!-- Question Badge & Selector -->
+                <div class="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
+                    <span id="question-number-badge" class="bg-amber-500 text-slate-950 font-display font-bold px-3.5 py-1.5 rounded-lg text-sm md:text-base shadow">
+                        Soal 1 / 20
+                    </span>
+                    <div class="flex items-center gap-1.5">
+                        <label for="jump-select" class="text-xs text-slate-400">Pilih Soal:</label>
+                        <select id="jump-select" onchange="jumpToQuestion(this.value)" class="bg-slate-800 border border-slate-700 text-amber-300 text-xs font-semibold rounded-lg px-2 py-1.5 focus:outline-none focus:border-amber-400">
+                            <!-- Populated dynamically via JS -->
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Round Score & Strikes -->
+                <div class="flex items-center gap-6">
+                    <!-- Strike Box -->
+                    <div class="flex items-center gap-1 bg-slate-950/80 px-3 py-1.5 rounded-xl border border-red-900/50">
+                        <span class="text-xs text-slate-400 mr-1 font-semibold">Salah:</span>
+                        <div id="strikes-container" class="flex gap-1 text-red-500 text-lg font-extrabold">
+                            <span class="opacity-20">❌</span>
+                            <span class="opacity-20">❌</span>
+                            <span class="opacity-20">❌</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Round Points -->
+                    <div class="text-right">
+                        <span class="text-[10px] uppercase text-slate-400 font-bold block">Poin Ronde Ini</span>
+                        <span id="round-score" class="font-display text-2xl font-bold text-emerald-400">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question Display Text -->
+            <div class="bg-slate-950/70 rounded-xl p-4 md:p-5 border border-slate-800 shadow-inner text-center">
+                <h2 id="question-text" aria-live="polite" class="font-display text-lg md:text-2xl font-bold text-slate-100 leading-relaxed">
+                    Loading soal...
+                </h2>
+            </div>
+        </div>
+
+        <!-- FAMILY 100 BOARD SECTION -->
+        <div class="mb-6">
+            <div class="flex justify-between items-center mb-3 px-1">
+                <span class="text-xs font-bold text-amber-400 uppercase tracking-widest flex items-center gap-1.5">
+                    <i class="fa-solid fa-trophy"></i> PAPAN JAWABAN <span class="normal-case tracking-normal text-emerald-200/80">(poin tertinggi ke terendah)</span>
+                </span>
+                <span id="found-count" class="text-xs font-semibold text-slate-400" aria-live="polite">0 / 0 Terbuka</span>
+            </div>
+
+            <!-- Answer Cards Grid -->
+            <div id="answers-board" class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                <!-- Dynamic Answer Boxes will be generated here -->
+            </div>
+        </div>
+
+        <!-- USER ANSWER INPUT SECTION -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 md:p-5 shadow-xl backdrop-blur">
+            <form id="guess-form" onsubmit="handleGuessSubmit(event)" class="space-y-3">
+                <label for="answer-input" class="block text-xs md:text-sm font-semibold text-slate-300">
+                    Tulis tebakanmu di sini <span class="text-lime-300">(huruf kapital otomatis)</span>:
+                </label>
+                <div class="flex flex-col sm:flex-row gap-2.5">
+                    <div class="relative flex-grow">
+                        <input 
+                            type="text" 
+                            id="answer-input"
+                            autocomplete="off"
+                            placeholder="Contoh: MUTUALISME" aria-label="Masukkan tebakan jawaban" 
+                            class="w-full bg-slate-950 border-2 border-slate-700 focus:border-amber-400 rounded-xl px-4 py-3.5 text-base md:text-lg font-bold text-amber-300 uppercase placeholder-slate-600 focus:outline-none transition shadow-inner"
+                        />
+                        <button 
+                            type="button" 
+                            onclick="clearInput()" 
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 px-2 py-1 text-sm">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                    </div>
+                    <button 
+                        type="submit" 
+                        class="bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-slate-950 font-display font-extrabold text-base px-6 py-3.5 rounded-xl shadow-lg hover:shadow-amber-500/20 active:scale-95 transition duration-150 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> JAWAB
+                    </button>
+                </div>
+            </form>
+
+            <!-- Control Buttons Footer -->
+            <div class="flex flex-wrap justify-between items-center gap-2 mt-4 pt-3 border-t border-slate-800/80">
+                <div class="flex items-center gap-2">
+                    <button 
+                        onclick="revealAllAnswers()" 
+                        class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold px-3.5 py-2 rounded-lg border border-slate-700 transition">
+                        <i class="fa-solid fa-eye mr-1"></i> Buka Semua Jawaban
+                    </button>
+                    <button 
+                        onclick="resetCurrentRound()" 
+                        class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold px-3.5 py-2 rounded-lg border border-slate-700 transition">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> Ulang Soal
+                    </button>
+                </div>
+
+                <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                    <button 
+                        id="prev-btn"
+                        onclick="navigateQuestion(-1)" 
+                        class="flex-1 sm:flex-none bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs md:text-sm font-semibold px-4 py-2 rounded-lg border border-slate-700 disabled:opacity-40 transition">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Sebelum
+                    </button>
+                    <button 
+                        id="next-btn"
+                        onclick="navigateQuestion(1)" 
+                        class="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-500 text-white text-xs md:text-sm font-semibold px-5 py-2 rounded-lg shadow transition">
+                        Berikutnya <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="text-center py-4 text-xs text-slate-500 border-t border-slate-800/50">
+        <p>Game Edukasi IPAS Kelas 5 SD • Topik: Ekosistem, Simbiosis & Rantai Makanan</p>
+    </footer>
+
+    <!-- STRIKE OVERLAY POPUP ANIMATION -->
+    <div id="strike-overlay" class="fixed inset-0 pointer-events-none z-50 flex items-center justify-center hidden">
+        <div class="bg-red-950/90 border-4 border-red-600 p-8 rounded-3xl text-center shadow-2xl backdrop-blur-md strike-anim">
+            <span class="text-8xl md:text-9xl text-red-500 font-extrabold block drop-shadow-lg">❌</span>
+            <span id="strike-overlay-text" class="font-display text-2xl md:text-3xl font-bold text-white mt-2 block">SALAH!</span>
+        </div>
+    </div>
+
+    <!-- COMPLETE ANSWER KEY MODAL -->
+    <div id="key-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-amber-500/40 rounded-2xl max-w-4xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+            <!-- Modal Header -->
+            <div class="p-4 md:p-5 border-b border-slate-800 flex justify-between items-center bg-slate-950">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-book-open text-amber-400 text-xl"></i>
+                    <h3 class="font-display text-lg md:text-xl font-bold text-amber-400">Kunci Jawaban & Poin Lengkap (20 Soal)</h3>
+                </div>
+                <button onclick="toggleKeyModal()" class="text-slate-400 hover:text-white text-xl p-1">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <!-- Modal Body (Table list) -->
+            <div class="p-4 md:p-6 overflow-y-auto space-y-6 flex-grow">
+                <div id="modal-key-list" class="space-y-4">
+                    <!-- Populated dynamically via JavaScript -->
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 border-t border-slate-800 bg-slate-950 text-right">
+                <button onclick="toggleKeyModal()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-semibold px-5 py-2 rounded-xl text-sm border border-amber-500/30">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ===================================================================
+           QUESTION BANK: 20 SOAL EKOSISTEM, SIMBIOSIS & RANTAI MAKANAN (SD 5)
+           Sorted by Points (Highest to Lowest)
+           =================================================================== */
+        const questionsData = [
+            {
+                id: 1,
+                question: "Sebutkan komponen abiotik (benda tak hidup) yang ada di dalam ekosistem!",
+                answers: [
+                    { name: "AIR", points: 35, keywords: ["AIR"] },
+                    { name: "TANAH", points: 25, keywords: ["TANAH"] },
+                    { name: "UDARA", points: 20, keywords: ["UDARA", "OKSIGEN"] },
+                    { name: "CAHAYA MATAHARI", points: 20, keywords: ["CAHAYA MATAHARI", "SINAR MATAHARI", "MATAHARI"] }
+                ]
+            },
+            {
+                id: 2,
+                question: "Sebutkan 3 jenis interaksi simbiosis antar makhluk hidup!",
+                answers: [
+                    { name: "MUTUALISME", points: 45, keywords: ["MUTUALISME", "SIMBIOSIS MUTUALISME"] },
+                    { name: "PARASITISME", points: 35, keywords: ["PARASITISME", "SIMBIOSIS PARASITISME"] },
+                    { name: "KOMENSALISME", points: 20, keywords: ["KOMENSALISME", "SIMBIOSIS KOMENSALISME"] }
+                ]
+            },
+            {
+                id: 3,
+                question: "Sebutkan hewan yang bertindak sebagai Konsumen Tingkat 1 (Herbivora) dalam rantai makanan!",
+                answers: [
+                    { name: "KELINCI", points: 30, keywords: ["KELINCI"] },
+                    { name: "SAPI", points: 25, keywords: ["SAPI"] },
+                    { name: "KAMBING", points: 25, keywords: ["KAMBING"] },
+                    { name: "BELALANG", points: 20, keywords: ["BELALANG"] }
+                ]
+            },
+            {
+                id: 4,
+                question: "Sebutkan hewan pemakan daging (Karnivora) yang sering menjadi Konsumen Puncak!",
+                answers: [
+                    { name: "SINGA", points: 35, keywords: ["SINGA"] },
+                    { name: "HARIMAU", points: 30, keywords: ["HARIMAU"] },
+                    { name: "ELANG", points: 20, keywords: ["ELANG", "BURUNG ELANG"] },
+                    { name: "SERIGALA", points: 15, keywords: ["SERIGALA"] }
+                ]
+            },
+            {
+                id: 5,
+                question: "Sebutkan contoh organisme yang bertindak sebagai Pengurai (Dekomposer)!",
+                answers: [
+                    { name: "JAMUR", points: 45, keywords: ["JAMUR", "FUNGI"] },
+                    { name: "BAKTERI", points: 35, keywords: ["BAKTERI"] },
+                    { name: "CACING TANAH", points: 20, keywords: ["CACING", "CACING TANAH"] }
+                ]
+            },
+            {
+                id: 6,
+                question: "Sebutkan contoh hubungan Simbiosis Mutualisme (saling menguntungkan)!",
+                answers: [
+                    { name: "LEBAH DAN BUNGA", points: 40, keywords: ["LEBAH DAN BUNGA", "LEBAH BUNGA", "KUPU KUPU DAN BUNGA"] },
+                    { name: "BURUNG JALAK DAN KERBAU", points: 35, keywords: ["BURUNG JALAK DAN KERBAU", "JALAK DAN KERBAU", "KERBAU JALAK"] },
+                    { name: "ANEMON DAN IKAN BADUT", points: 25, keywords: ["ANEMON DAN IKAN BADUT", "IKAN BADUT DAN ANEMON", "NEMO"] }
+                ]
+            },
+            {
+                id: 7,
+                question: "Sebutkan contoh hubungan Simbiosis Parasitisme (satu untung, satu rugi)!",
+                answers: [
+                    { name: "BENALU DAN POHON INANG", points: 40, keywords: ["BENALU DAN POHON INANG", "BENALU POHON", "BENALU"] },
+                    { name: "NYAMUK DAN MANUSIA", points: 30, keywords: ["NYAMUK DAN MANUSIA", "NYAMUK MANUSIA", "NYAMUK"] },
+                    { name: "KUTU DAN HEWAN", points: 30, keywords: ["KUTU DAN HEWAN", "KUTU RAMBUT", "KUTU ANJING", "KUTU KUCING", "KUTU"] }
+                ]
+            },
+            {
+                id: 8,
+                question: "Sebutkan contoh Ekosistem Buatan yang dibuat oleh manusia!",
+                answers: [
+                    { name: "SAWAH", points: 35, keywords: ["SAWAH"] },
+                    { name: "BENDUNGAN", points: 25, keywords: ["BENDUNGAN", "WADUK"] },
+                    { name: "AKUARIUM", points: 20, keywords: ["AKUARIUM"] },
+                    { name: "TAMAN", points: 20, keywords: ["TAMAN", "KEBUN"] }
+                ]
+            },
+            {
+                id: 9,
+                question: "Sebutkan tumbuhan atau organisme hijau yang bertindak sebagai Produsen!",
+                answers: [
+                    { name: "PADI", points: 35, keywords: ["PADI"] },
+                    { name: "RUMPUT", points: 30, keywords: ["RUMPUT"] },
+                    { name: "POHON JAGUNG", points: 20, keywords: ["POHON JAGUNG", "JAGUNG"] },
+                    { name: "FITOPLANKTON", points: 15, keywords: ["FITOPLANKTON", "PLANKTON"] }
+                ]
+            },
+            {
+                id: 10,
+                question: "Sebutkan contoh Ekosistem Alami yang ada di daratan!",
+                answers: [
+                    { name: "HUTAN", points: 40, keywords: ["HUTAN", "HUTAN HUJAN"] },
+                    { name: "PADANG RUMPUT", points: 30, keywords: ["PADANG RUMPUT", "SAVANA", "SABANA"] },
+                    { name: "GURUN", points: 18, keywords: ["GURUN", "PADANG PASIR"] },
+                    { name: "TUNDRA", points: 12, keywords: ["TUNDRA", "KUTUB"] }
+                ]
+            },
+            {
+                id: 11,
+                question: "Sebutkan contoh Ekosistem Alami yang ada di perairan!",
+                answers: [
+                    { name: "LAUT", points: 40, keywords: ["LAUT", "SAMUDRA"] },
+                    { name: "SUNGAI", points: 30, keywords: ["SUNGAI"] },
+                    { name: "DANAU", points: 20, keywords: ["DANAU"] },
+                    { name: "RAWA", points: 10, keywords: ["RAWA"] }
+                ]
+            },
+            {
+                id: 12,
+                question: "Sebutkan contoh hubungan Simbiosis Komensalisme (satu untung, satu tidak rugi/untung)!",
+                answers: [
+                    { name: "ANGGREK DAN POHON INANG", points: 45, keywords: ["ANGGREK DAN POHON INANG", "ANGGREK POHON", "ANGGREK"] },
+                    { name: "IKAN REMORA DAN IKAN HIU", points: 35, keywords: ["IKAN REMORA DAN HIU", "REMORA DAN HIU", "REMORA HIU", "REMORA"] },
+                    { name: "TUMBUHAN SIRIH DAN POHON", points: 20, keywords: ["TUMBUHAN SIRIH DAN POHON", "SIRIH DAN POHON", "SIRIH"] }
+                ]
+            },
+            {
+                id: 13,
+                question: "Sebutkan kegiatan manusia yang dapat merusak keseimbangan ekosistem!",
+                answers: [
+                    { name: "PENEBANGAN LIAR", points: 35, keywords: ["PENEBANGAN LIAR", "PENEBANGAN HUTAN", "DEFORESTASI"] },
+                    { name: "PENCEMARAN LINGKUNGAN", points: 30, keywords: ["PENCEMARAN LINGKUNGAN", "POLUSI", "MEMBUANG SAMPAH SEMBARANGAN"] },
+                    { name: "PERBURUAN LIAR", points: 20, keywords: ["PERBURUAN LIAR", "BURU LIAR"] },
+                    { name: "PEMBAKARAN HUTAN", points: 15, keywords: ["PEMBAKARAN HUTAN", "KEBAKARAN HUTAN"] }
+                ]
+            },
+            {
+                id: 14,
+                question: "Sebutkan hal yang dibutuhkan oleh tumbuhan hijau untuk melakukan fotosintesis!",
+                answers: [
+                    { name: "CAHAYA MATAHARI", points: 35, keywords: ["CAHAYA MATAHARI", "SINAR MATAHARI", "MATAHARI"] },
+                    { name: "AIR", points: 30, keywords: ["AIR", "H2O"] },
+                    { name: "KARBONDIOKSIDA", points: 25, keywords: ["KARBONDIOKSIDA", "CARBON DIOXIDE", "CO2"] },
+                    { name: "KLOROFIL", points: 10, keywords: ["KLOROFIL", "ZAT HIJAU DAUN"] }
+                ]
+            },
+            {
+                id: 15,
+                question: "Sebutkan hewan pemakan segala (Omnivora) yang ada di lingkungan sekitar!",
+                answers: [
+                    { name: "AYAM", points: 35, keywords: ["AYAM"] },
+                    { name: "TIKUS", points: 30, keywords: ["TIKUS"] },
+                    { name: "BEBEK", points: 20, keywords: ["BEBEK"] },
+                    { name: "MONYET", points: 15, keywords: ["MONYET", "KERA"] }
+                ]
+            },
+            {
+                id: 16,
+                question: "Sebutkan manfaat rantai makanan bagi keberlangsungan ekosistem!",
+                answers: [
+                    { name: "MENJAGA POPULASI", points: 40, keywords: ["MENJAGA POPULASI", "KONTROL POPULASI", "MENGONTROL POPULASI"] },
+                    { name: "KESEIMBANGAN ALAM", points: 35, keywords: ["KESEIMBANGAN ALAM", "MENJAGA KESEIMBANGAN", "KESEIMBANGAN EKOSISTEM"] },
+                    { name: "ALIRAN ENERGI", points: 25, keywords: ["ALIRAN ENERGI", "PERPINDAHAN ENERGI", "ENERGI"] }
+                ]
+            },
+            {
+                id: 17,
+                question: "Sebutkan hewan yang hidup dan beradaptasi di ekosistem Padang Rumput (Savana)!",
+                answers: [
+                    { name: "ZEBRA", points: 35, keywords: ["ZEBRA"] },
+                    { name: "JERAPAH", points: 30, keywords: ["JERAPAH"] },
+                    { name: "SINGA", points: 20, keywords: ["SINGA"] },
+                    { name: "GAJAH", points: 15, keywords: ["GAJAH"] }
+                ]
+            },
+            {
+                id: 18,
+                question: "Sebutkan produsen utama di dalam ekosistem perairan/laut!",
+                answers: [
+                    { name: "FITOPLANKTON", points: 50, keywords: ["FITOPLANKTON", "PLANKTON"] },
+                    { name: "RUMPUT LAUT", points: 30, keywords: ["RUMPUT LAUT"] },
+                    { name: "ALGA HIJAU", points: 20, keywords: ["ALGA", "ALGA HIJAU", "GANGGANG"] }
+                ]
+            },
+            {
+                id: 19,
+                question: "Sebutkan hewan laut pemangsa/karnivora pada rantai makanan laut!",
+                answers: [
+                    { name: "IKAN HIU", points: 40, keywords: ["IKAN HIU", "HIU"] },
+                    { name: "PAUS PEMAKAN DAGING", points: 30, keywords: ["PAUS", "IKAN PAUS", "PAUS ORCA"] },
+                    { name: "LUMBA LUMBA", points: 18, keywords: ["LUMBA LUMBA", "IKAN LUMBA LUMBA"] },
+                    { name: "CUMI CUMI", points: 12, keywords: ["CUMI CUMI", "CUMI"] }
+                ]
+            },
+            {
+                id: 20,
+                question: "Sebutkan upaya manusia untuk menjaga dan melestarikan ekosistem!",
+                answers: [
+                    { name: "REBOISASI", points: 40, keywords: ["REBOISASI", "PENANAMAN POHON", "PENANAMAN HAK"] },
+                    { name: "DAUR ULANG SAMPAH", points: 30, keywords: ["DAUR ULANG", "RECYCLE", "MENGELOLA SAMPAH"] },
+                    { name: "MEMBUANG SAMPAH PADA TEMPATNYA", points: 18, keywords: ["MEMBUANG SAMPAH PADA TEMPATNYA", "JAGA KEBERSIHAN"] },
+                    { name: "MEMBUAT CAGAR ALAM", points: 12, keywords: ["CAGAR ALAM", "SUAKA MARGASATWA", "HUTAN LINDUNG"] }
+                ]
+            }
+        ];
+
+        // Game State Variables
+        let currentQuestionIdx = 0;
+        let globalScore = 0;
+        let roundScore = 0;
+        let strikes = 0;
+        let revealedStatus = []; // Array of booleans for current question
+
+        // Web Audio API Synthesizer for SFX
+        let audioCtx = null;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        // Sound 1: Correct Answer (Ting!)
+        function playCorrectSound() {
+            try {
+                const ctx = getAudioContext();
+                const now = ctx.currentTime;
+                
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, now); // C5
+                osc.frequency.exponentialRampToValueAtTime(1046.50, now + 0.3); // C6
+
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.4);
+            } catch (e) { console.log('Audio disabled/not supported'); }
+        }
+
+        // Sound 2: Wrong Answer (Buzzer)
+        function playWrongSound() {
+            try {
+                const ctx = getAudioContext();
+                const now = ctx.currentTime;
+
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(130, now); // Low buzz
+                osc.frequency.linearRampToValueAtTime(110, now + 0.3);
+
+                gain.gain.setValueAtTime(0.4, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.35);
+            } catch (e) { console.log('Audio disabled/not supported'); }
+        }
+
+        // Sound 3: Fanfare Victory
+        function playWinSound() {
+            try {
+                const ctx = getAudioContext();
+                const notes = [523.25, 659.25, 783.99, 1046.50];
+                notes.forEach((freq, idx) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    const now = ctx.currentTime + (idx * 0.12);
+
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(freq, now);
+
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                });
+            } catch (e) { console.log('Audio disabled'); }
+        }
+
+        // Initialize Game
+        window.addEventListener('DOMContentLoaded', () => {
+            populateJumpSelect();
+            populateModalKeyList();
+            loadQuestion(0);
+
+            // Auto uppercase on input typing
+            const answerInput = document.getElementById('answer-input');
+            answerInput.addEventListener('input', (e) => {
+                e.target.value = e.target.value.toUpperCase();
+            });
+        });
+
+        // Populate Jump Selector
+        function populateJumpSelect() {
+            const select = document.getElementById('jump-select');
+            select.innerHTML = '';
+            questionsData.forEach((q, idx) => {
+                const opt = document.createElement('option');
+                opt.value = idx;
+                opt.textContent = `Soal #${idx + 1}`;
+                select.appendChild(opt);
+            });
+        }
+
+        // Load Question Logic
+        function loadQuestion(idx) {
+            currentQuestionIdx = idx;
+            const q = questionsData[idx];
+
+            // Reset current round metrics
+            roundScore = 0;
+            strikes = 0;
+            revealedStatus = new Array(q.answers.length).fill(false);
+
+            // Update Header & Jump Select
+            document.getElementById('question-number-badge').textContent = `Soal ${idx + 1} / ${questionsData.length}`;
+            document.getElementById('question-text').textContent = q.question;
+            document.getElementById('jump-select').value = idx;
+
+            updateStrikesUI();
+            updateRoundScoreUI();
+            renderAnswerBoard();
+
+            // Nav buttons state
+            document.getElementById('prev-btn').disabled = (idx === 0);
+            document.getElementById('next-btn').disabled = (idx === questionsData.length - 1);
+
+            // Clear input box
+            clearInput();
+        }
+
+        // Render Answer Board Cards
+        function renderAnswerBoard() {
+            const q = questionsData[currentQuestionIdx];
+            const board = document.getElementById('answers-board');
+            board.innerHTML = '';
+
+            let foundCount = 0;
+
+            q.answers.forEach((ans, idx) => {
+                const isRevealed = revealedStatus[idx];
+                if (isRevealed) foundCount++;
+
+                const box = document.createElement('div');
+                box.className = "feud-box h-16 md:h-20 w-full cursor-pointer";
+                box.onclick = () => manualToggleReveal(idx);
+
+                box.innerHTML = `
+                    <div class="feud-card w-full h-full relative rounded-xl shadow-lg ${isRevealed ? 'flipped' : ''}">
+                        <!-- FRONT SIDE (HIDDEN / NUMBER BOX) -->
+                        <div class="feud-front absolute inset-0 bg-gradient-to-r from-blue-900 to-slate-900 border-2 border-amber-400/80 rounded-xl flex items-center justify-between px-6 shadow-inner hover:border-yellow-300 transition">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-amber-400 text-slate-950 font-display font-extrabold w-8 h-8 rounded-full flex items-center justify-center text-sm shadow">
+                                    ${idx + 1}
+                                </span>
+                                <span class="text-slate-400 text-xs md:text-sm font-semibold tracking-widest uppercase">
+                                    JAWABAN #${idx + 1}
+                                </span>
+                            </div>
+                            <i class="fa-solid fa-lock text-amber-400/60 text-base"></i>
+                        </div>
+
+                        <!-- BACK SIDE (REVEALED / ANSWER & POINTS) -->
+                        <div class="feud-back absolute inset-0 bg-gradient-to-r from-emerald-800 to-teal-900 border-2 border-emerald-400 rounded-xl flex items-center justify-between px-5 md:px-6 shadow-2xl">
+                            <span class="font-display text-base md:text-xl font-extrabold text-white uppercase tracking-wide truncate mr-2">
+                                ${ans.name}
+                            </span>
+                            <div class="bg-amber-400 text-slate-950 px-3.5 py-1.5 rounded-lg font-display font-black text-lg md:text-xl shadow">
+                                ${ans.points}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                board.appendChild(box);
+            });
+
+            document.getElementById('found-count').textContent = `${foundCount} / ${q.answers.length} Terbuka`;
+        }
+
+        // Form Submit Handler
+        function handleGuessSubmit(e) {
+            e.preventDefault();
+            const inputEl = document.getElementById('answer-input');
+            const rawGuess = inputEl.value.trim().toUpperCase();
+
+            if (!rawGuess) return;
+
+            const q = questionsData[currentQuestionIdx];
+            let matchedIdx = -1;
+
+            // Normalize guess text
+            const cleanGuess = rawGuess.replace(/[^A-Z0-9 ]/g, "").trim();
+
+            // Check against keywords and answer names
+            q.answers.forEach((ans, idx) => {
+                if (revealedStatus[idx]) return; // Skip already revealed
+
+                const cleanName = ans.name.replace(/[^A-Z0-9 ]/g, "").trim();
+                
+                // Match condition
+                if (cleanGuess === cleanName) {
+                    matchedIdx = idx;
+                } else if (ans.keywords) {
+                    ans.keywords.forEach(kw => {
+                        const cleanKw = kw.replace(/[^A-Z0-9 ]/g, "").trim();
+                        if (cleanGuess === cleanKw) {
+                            matchedIdx = idx;
+                        }
+                    });
+                }
+            });
+
+            if (matchedIdx !== -1) {
+                // CORRECT GUESS!
+                revealAnswer(matchedIdx, true);
+                playCorrectSound();
+                clearInput();
+
+                // Check if all answers revealed
+                if (revealedStatus.every(st => st === true)) {
+                    playWinSound();
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.6 }
+                    });
+                }
+            } else {
+                // INCORRECT GUESS!
+                handleWrongAnswer();
+                clearInput();
+            }
+        }
+
+        // Reveal specific answer box
+        function revealAnswer(idx, addPoints = true) {
+            if (revealedStatus[idx]) return;
+
+            revealedStatus[idx] = true;
+            const ans = questionsData[currentQuestionIdx].answers[idx];
+
+            if (addPoints) {
+                roundScore += ans.points;
+                globalScore += ans.points;
+                updateRoundScoreUI();
+                updateGlobalScoreUI();
+            }
+
+            renderAnswerBoard();
+        }
+
+        // Manual click toggle answer
+        function manualToggleReveal(idx) {
+            if (!revealedStatus[idx]) {
+                revealAnswer(idx, true);
+                playCorrectSound();
+            }
+        }
+
+        // Handle wrong guess
+        function handleWrongAnswer() {
+            strikes++;
+            playWrongSound();
+            updateStrikesUI();
+
+            // Show popup overlay
+            const overlay = document.getElementById('strike-overlay');
+            const overlayText = document.getElementById('strike-overlay-text');
+            
+            overlayText.textContent = strikes >= 3 ? "3x SALAH! KESEMPATAN HABIS!" : "JAWABAN TIDAK ADA!";
+            overlay.classList.remove('hidden');
+
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+            }, 1200);
+        }
+
+        // Update Strike UI
+        function updateStrikesUI() {
+            const container = document.getElementById('strikes-container');
+            let html = '';
+            for (let i = 1; i <= 3; i++) {
+                if (i <= strikes) {
+                    html += `<span class="text-red-500 scale-110 transition duration-200 drop-shadow">❌</span>`;
+                } else {
+                    html += `<span class="opacity-20">❌</span>`;
+                }
+            }
+            container.innerHTML = html;
+        }
+
+        // Update Scores UI
+        function updateRoundScoreUI() {
+            document.getElementById('round-score').textContent = roundScore;
+        }
+
+        function updateGlobalScoreUI() {
+            document.getElementById('global-score').textContent = globalScore;
+        }
+
+        // Clear Answer Input
+        function clearInput() {
+            const input = document.getElementById('answer-input');
+            input.value = '';
+            input.focus();
+        }
+
+        // Reveal All Answers button
+        function revealAllAnswers() {
+            const q = questionsData[currentQuestionIdx];
+            q.answers.forEach((ans, idx) => {
+                if (!revealedStatus[idx]) {
+                    revealAnswer(idx, false); // Don't add points when revealing all manually
+                }
+            });
+            playWinSound();
+        }
+
+        // Reset Current Question
+        function resetCurrentRound() {
+            // Subtract current round score from global score
+            globalScore = Math.max(0, globalScore - roundScore);
+            updateGlobalScoreUI();
+            loadQuestion(currentQuestionIdx);
+        }
+
+        // Navigation Next / Previous
+        function navigateQuestion(delta) {
+            const newIdx = currentQuestionIdx + delta;
+            if (newIdx >= 0 && newIdx < questionsData.length) {
+                loadQuestion(newIdx);
+            }
+        }
+
+        function jumpToQuestion(idxStr) {
+            const idx = parseInt(idxStr, 10);
+            if (!isNaN(idx) && idx >= 0 && idx < questionsData.length) {
+                loadQuestion(idx);
+            }
+        }
+
+        // Populate Key Answer Modal
+        function populateModalKeyList() {
+            const container = document.getElementById('modal-key-list');
+            container.innerHTML = '';
+
+            questionsData.forEach((q, qIdx) => {
+                const item = document.createElement('div');
+                item.className = "bg-slate-950/80 border border-slate-800 rounded-xl p-4 space-y-3";
+
+                let answersHTML = '';
+                q.answers.forEach((ans, aIdx) => {
+                    answersHTML += `
+                        <div class="flex justify-between items-center bg-slate-900 px-3.5 py-2 rounded-lg border border-slate-800">
+                            <div class="flex items-center gap-2">
+                                <span class="text-amber-400 font-bold text-xs bg-amber-500/10 px-2 py-0.5 rounded">#${aIdx + 1}</span>
+                                <span class="font-bold text-slate-100 text-sm tracking-wide uppercase">${ans.name}</span>
+                            </div>
+                            <span class="bg-emerald-500/20 text-emerald-400 font-bold text-xs px-2.5 py-1 rounded-md">${ans.points} POIN</span>
+                        </div>
+                    `;
+                });
+
+                item.innerHTML = `
+                    <div class="flex items-start justify-between gap-2 border-b border-slate-800 pb-2">
+                        <h4 class="font-display font-bold text-amber-300 text-sm md:text-base">
+                            Soal #${qIdx + 1}: ${q.question}
+                        </h4>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 pt-1">
+                        ${answersHTML}
+                    </div>
+                `;
+
+                container.appendChild(item);
+            });
+        }
+
+        // Toggle Key Modal Display
+        function toggleKeyModal() {
+            const modal = document.getElementById('key-modal');
+            modal.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
